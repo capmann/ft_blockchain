@@ -35,7 +35,8 @@ export class AppController {
 
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
-  async uploadMusic(@UploadedFile() music: Express.Multer.File) {
+  async uploadMusic(@UploadedFile() music: Express.Multer.File) : Promise<any> {
+    console.log(music)
     /**
      * Fetch the current nft supply
      */
@@ -80,9 +81,11 @@ export class AppController {
     const nft = await starton.post(`/smart-contract/${smartContractId}/interact`, {
       functionName: 'safeMint',
       params: [
-          '0x1216990c6f894393ecc2be8cfeb98193bd1824e2',
+          '0xa5e6059264BeC83687a32cb1ECbE64D19231829f',
           ifpsJson.data.ipfsHash
       ],
     })
+    console.log(nft.data)
+    return {data: nft.data }
   }
 }
